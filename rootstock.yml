@@ -1,0 +1,33 @@
+x-logging: &logging
+  logging:
+    driver: json-file
+    options:
+      max-size: 100m
+      max-file: "3"
+      tag: '{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}'
+
+services:
+  rootstock:
+    restart: "unless-stopped"
+    image: rsksmart/rskj:${ROOTSTOCK_DOCKER_TAG}
+    volumes:
+      - rootstock-data:/var/lib/rsk/.rsk
+    ports:
+      - ${P2P_PORT:-5050}:${P2P_PORT:-5050}
+      - ${RPC_PORT:-4444}:${RPC_PORT:-4444}
+    command: ["${START_COMMAND:-}"]
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${RPC_HOST:-rootstock}.service=${RPC_HOST:-rootstock}
+      - traefik.http.routers.${RPC_HOST:-rootstock}.entrypoints=websecure
+      - traefik.http.routers.${RPC_HOST:-rootstock}.rule=Host(`${RPC_HOST:-rootstock}.${DOMAIN}`)
+      - traefik.http.routers.${RPC_HOST:-rootstock}.tls.certresolver=letsencrypt
+      - traefik.http.routers.${RPC_HOST:-rootstock}lb.service=${RPC_HOST:-rootstock}
+      - traefik.http.routers.${RPC_HOST:-rootstock}lb.entrypoints=websecure
+      - traefik.http.routers.${RPC_HOST:-rootstock}lb.rule=Host(`${RPC_LB:-rootstock-lb}.${DOMAIN}`)
+      - traefik.http.routers.${RPC_HOST:-rootstock}lb.tls.certresolver=letsencrypt
+      - traefik.http.services.${RPC_HOST:-rootstock}.loadbalancer.server.port=${RPC_PORT:-4444}
+    <<: *logging
+
+volumes:
+  rootstock-data:

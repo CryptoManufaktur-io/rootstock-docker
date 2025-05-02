@@ -16,7 +16,6 @@ services:
       - RSKJ_LOG_PROPS=${LOG_LEVEL:-DEBUG}
     ports:
       - ${P2P_PORT:-5050}:${P2P_PORT:-5050}
-      - ${RPC_PORT:-4444}:${RPC_PORT:-4444}
     command: ["${START_COMMAND:-}"]
     labels:
       - traefik.enable=true
@@ -29,6 +28,16 @@ services:
       - traefik.http.routers.${RPC_HOST:-rootstock}lb.rule=Host(`${RPC_LB:-rootstock-lb}.${DOMAIN}`)
       - traefik.http.routers.${RPC_HOST:-rootstock}lb.tls.certresolver=letsencrypt
       - traefik.http.services.${RPC_HOST:-rootstock}.loadbalancer.server.port=${RPC_PORT:-4444}
+      
+      - traefik.http.routers.${WS_HOST:-rootstockws}.service=${WS_HOST:-rootstockws}
+      - traefik.http.routers.${WS_HOST:-rootstockws}.entrypoints=websecure
+      - traefik.http.routers.${WS_HOST:-rootstockws}.rule=Host(`${WS_HOST:-rootstockws}.${DOMAIN}`)
+      - traefik.http.routers.${WS_HOST:-rootstockws}.tls.certresolver=letsencrypt
+      - traefik.http.routers.${WS_HOST:-rootstockws}lb.service=${WS_HOST:-rootstockws}
+      - traefik.http.routers.${WS_HOST:-rootstockws}lb.entrypoints=websecure
+      - traefik.http.routers.${WS_HOST:-rootstockws}lb.rule=Host(`${WS_LB:-rootstockws-lb}.${DOMAIN}`)
+      - traefik.http.routers.${WS_HOST:-rootstockws}lb.tls.certresolver=letsencrypt
+      - traefik.http.services.${WS_HOST:-rootstockws}.loadbalancer.server.port=${WS_PORT:-4445}
     <<: *logging
 
 volumes:

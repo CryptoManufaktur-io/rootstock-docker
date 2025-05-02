@@ -11,7 +11,7 @@ services:
     restart: "unless-stopped"
     image: rsksmart/rskj:${ROOTSTOCK_DOCKER_TAG}
     volumes:
-      - rootstock-data:/var/lib/rsk/database
+      - rootstock-data:/var/lib/rsk
     ports:
       - ${P2P_PORT:-5050}:${P2P_PORT:-5050}
     command: ["${START_COMMAND:-}"]

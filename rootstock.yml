@@ -12,6 +12,8 @@ services:
     image: rsksmart/rskj:${ROOTSTOCK_DOCKER_TAG}
     volumes:
       - rootstock-data:/var/lib/rsk/.rsk
+    environment:
+      - RSKJ_LOG_PROPS=${LOG_LEVEL:-DEBUG}
     ports:
       - ${P2P_PORT:-5050}:${P2P_PORT:-5050}
       - ${RPC_PORT:-4444}:${RPC_PORT:-4444}

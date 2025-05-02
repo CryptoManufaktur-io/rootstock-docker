@@ -11,7 +11,7 @@ services:
     restart: "unless-stopped"
     image: rsksmart/rskj:${ROOTSTOCK_DOCKER_TAG}
     volumes:
-      - rootstock-data:/var/lib/rsk/.rsk
+      - rootstock-data:/var/lib/rsk/database
     ports:
       - ${P2P_PORT:-5050}:${P2P_PORT:-5050}
     command: ["${START_COMMAND:-}"]
@@ -26,7 +26,7 @@ services:
       - traefik.http.routers.${RPC_HOST:-rootstock}lb.rule=Host(`${RPC_LB:-rootstock-lb}.${DOMAIN}`)
       - traefik.http.routers.${RPC_HOST:-rootstock}lb.tls.certresolver=letsencrypt
       - traefik.http.services.${RPC_HOST:-rootstock}.loadbalancer.server.port=${RPC_PORT:-4444}
-      
+
       - traefik.http.routers.${WS_HOST:-rootstockws}.service=${WS_HOST:-rootstockws}
       - traefik.http.routers.${WS_HOST:-rootstockws}.entrypoints=websecure
       - traefik.http.routers.${WS_HOST:-rootstockws}.rule=Host(`${WS_HOST:-rootstockws}.${DOMAIN}`)

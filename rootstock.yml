@@ -12,10 +12,13 @@ services:
     image: rsksmart/rskj:${ROOTSTOCK_DOCKER_TAG}
     volumes:
       - rootstock-data:/var/lib/rsk
-      - ./override.conf:/override.conf:ro
     ports:
       - ${P2P_PORT:-5050}:5050
-    command: ["-Drsk.conf.file=/override.conf --${NETWORK}"]
+    environment:
+      - RSKJ_SYS_PROPS=${RSKJ_SYS_PROPS}
+      - RSKJ_LOG_PROPS=-Dlogging.stdout=${LOG_LEVEL}
+      - RSKJ_OPTS=${RSKJ_OPTS}
+    command: ["${START_COMMAND:-}"]
     labels:
       - traefik.enable=true
 

@@ -49,3 +49,7 @@ services:
 
 volumes:
   rootstock-data:
+
+networks:
+  default:
+    enable_ipv6: false

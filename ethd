@@ -656,7 +656,7 @@ space() {
 
 check-sync() {
   if [[ $# -eq 0 ]]; then
-    bash scripts/check_sync.sh --public-rpc https://rootstock.drpc.org --compose-service rootstock || true
+    bash scripts/check_sync.sh --public-rpc https://rootstock.drpc.org --compose-service rootstock --local-rpc http://127.0.0.1:4444 || true
   else
     bash scripts/check_sync.sh "$@" || true
   fi

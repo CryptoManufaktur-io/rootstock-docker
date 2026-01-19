@@ -13,7 +13,8 @@ services:
     volumes:
       - rootstock-data:/var/lib/rsk
     ports:
-      - ${P2P_PORT:-5050}:5050
+      - ${P2P_PORT:-5050}:5050/tcp
+      - ${P2P_PORT:-5050}:5050/udp
     environment:
       - RSKJ_SYS_PROPS=${RSKJ_SYS_PROPS}
       - RSKJ_LOG_PROPS=-Dlogging.stdout=${LOG_LEVEL}

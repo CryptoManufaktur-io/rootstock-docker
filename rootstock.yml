@@ -12,6 +12,7 @@ services:
     image: rsksmart/rskj:${ROOTSTOCK_DOCKER_TAG}
     volumes:
       - rootstock-data:/var/lib/rsk
+      - ./rootstock/override.conf:/etc/rsk/override.conf:ro
     ports:
       - ${P2P_PORT:-5050}:5050/tcp
       - ${P2P_PORT:-5050}:5050/udp

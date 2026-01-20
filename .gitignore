@@ -3,3 +3,4 @@
 *.bak
 *.original
 custom.yml
+rootstock/override.conf

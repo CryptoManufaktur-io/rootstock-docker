@@ -10,17 +10,16 @@ services:
   rootstock:
     restart: "unless-stopped"
     image: rsksmart/rskj:${ROOTSTOCK_DOCKER_TAG}
+    platform: linux/amd64
     volumes:
       - rootstock-data:/var/lib/rsk
-      - ./rootstock/override.conf:/etc/rsk/override.conf:ro
+      - ./rootstock/override.conf:/var/lib/rsk/override.conf:ro
     ports:
       - ${P2P_PORT:-5050}:5050/tcp
       - ${P2P_PORT:-5050}:5050/udp
     environment:
       - RSKJ_SYS_PROPS=${RSKJ_SYS_PROPS}
       - RSKJ_LOG_PROPS=-Dlogging.stdout=${LOG_LEVEL}
-      - RSKJ_OPTS=${RSKJ_OPTS}
-    command: ["${START_COMMAND:-}"]
     labels:
       - traefik.enable=true
 

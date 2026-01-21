@@ -1,7 +1,19 @@
 blockchain.config.name = "main"
 
-rpc.providers.web.http.bind_address = "0.0.0.0"
-rpc.providers.ws.bind_address       = "0.0.0.0"
+rpc {
+    providers {
+        web {
+            http {
+                enabled = true
+                bind_address = "0.0.0.0"
+            }
+            ws {
+                enabled = true
+                bind_address = "0.0.0.0"
+            }
+        }
+    }
+}
 
 sync {
   enabled = true

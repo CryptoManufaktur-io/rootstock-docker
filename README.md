@@ -28,6 +28,8 @@ To update the software, run `./rootstockd update` and then `./rootstockd up`
 `custom.yml` is not tracked by git and can be used to override anything in the provided yml files. If you use it,
 add it to `COMPOSE_FILE` in `.env`
 
+The `personal` JSON-RPC module is disabled in `rootstock/override.conf.*` because it can unlock accounts and sign on the node. Operators who really need it can set `rpc.modules.personal.enabled = "true"` in their `rootstock/override.conf`.
+
 ## Version
 
 Rootstock Docker uses a semver scheme.

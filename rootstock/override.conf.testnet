@@ -1,6 +1,11 @@
 blockchain.config.name = "testnet"
 
 rpc {
+    modules {
+        personal {
+            enabled = "false"
+        }
+    }
     providers {
         web {
             http {

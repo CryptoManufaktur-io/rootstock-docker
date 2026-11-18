@@ -20,6 +20,8 @@ services:
     environment:
       - RSKJ_SYS_PROPS=${RSKJ_SYS_PROPS}
       - RSKJ_LOG_PROPS=-Dlogging.stdout=${LOG_LEVEL}
+      # Java4Shell (CVE-2026-114938) mitigation; remove once the image ships a fixed JDK
+      - JAVA_TOOL_OPTIONS=-XX:-UseBASE64Intrinsics
     labels:
       - traefik.enable=true
 
